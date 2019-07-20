@@ -1,5 +1,6 @@
 import Web3 from 'web3';
-const FALLBACK_WEB3_PROVIDER = process.env.REACT_APP_NETWORK || 'http://0.0.0.0:8545';
+const FALLBACK_WEB3_PROVIDER = process.env.REACT_APP_NETWORK || 'http://0.0.0.0:7545';  // Ganache-GUI
+//const FALLBACK_WEB3_PROVIDER = process.env.REACT_APP_NETWORK || 'http://0.0.0.0:8545';
 
 const getWeb3 = () =>
   new Promise((resolve, reject) => {
@@ -39,11 +40,14 @@ const getGanacheWeb3 = () => {
   if (isProd) {
     return null;
   }
-  const provider = new Web3.providers.HttpProvider('http://0.0.0.0:8545');
+  const provider = new Web3.providers.HttpProvider(
+    'http://0.0.0.0:7545'    // Ganache-GUI
+    //'http://0.0.0.0:8545'  // Ganache-CLI
+  );
   const web3 = new Web3(provider);
   console.log('No local ganache found.');
   return web3;
 };
 
 export default getWeb3;
-export { getGanacheWeb3 };
+export { getGanacheWeb3, Web3 };

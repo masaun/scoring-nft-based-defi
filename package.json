@@ -4,7 +4,16 @@
   "description": "ZeppelinOS kit containing React, ZeppelinOS & OpenZeppelin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:tf": "truffle test ./test/*",
+    "start-blank": "rm -rf client/src && cp -rf barebones/src client/",
+    "client": "cd client && npm run start",
+    "console": "truffle console --network development",
+    "push": "zos push --deploy-dependencies",
+    "session": "zos session --network development --expires 7200",
+    "migrate": "truffle migrate --reset --network development",
+    "migrate:ropsten": "truffle migrate --reset --network ropsten",
+    "migrate:kovan": "truffle migrate --reset --network kovan"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,33 @@
+.push {
+  height: 30px;
+}
+
+.footer {
+  height: 40px;
+  background: rgba(255, 255, 255, 0);
+  display: flex;
+  justify-content: center;
+  padding: 0px 70px;
+/*  border-top: 0.1px solid white;
+*/}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  padding-top: 10px;
+
+}
+.footer-links a {
+  color: #9198e5;
+  font-weight: lighter;
+  opacity: 0.75;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 0px 10px;
+}
+.footer-links a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+

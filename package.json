@@ -1,23 +1,22 @@
 {
   "name": "zepkit",
   "version": "1.0.0",
-  "description": "ZeppelinOS kit containing React, ZeppelinOS & OpenZeppelin",
+  "description": "Truffle box containing React, ZeppelinOS & OpenZeppelin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:tf": "truffle test ./test/*",
+    "test": "truffle test ./test/*",
     "start-blank": "rm -rf client/src && cp -rf barebones/src client/",
     "client": "cd client && npm run start",
     "console": "truffle console --network development",
     "push": "zos push --deploy-dependencies",
     "session": "zos session --network development --expires 7200",
     "migrate": "truffle migrate --reset --network development",
-    "migrate:ropsten": "truffle migrate --reset --network ropsten",
-    "migrate:kovan": "truffle migrate --reset --network kovan"
+    "migrate:kovan": "truffle migrate --reset --network kovan",
+    "migrate:rinkeby": "truffle migrate --reset --network rinkeby"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zeppelinos/zepkit"
+    "url": "git+https://github.com/rrecuero/zepkit.git"
   },
   "keywords": [
     "zeppelinos",
@@ -25,21 +24,20 @@
     "truffle",
     "react"
   ],
-  "author": "Ramon Recuero <ramon@dapis.io>, Igor Yalovoy <to@ylv.io>",
+  "author": "Ramon Recuero <ramon@dapis.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zeppelinos/zepkit/issues"
+    "url": "https://github.com/rrecuero/zepkit/issues"
   },
-  "homepage": "https://github.com/zeppelinos/zepkit/blob/stable/README.md",
+  "homepage": "https://github.com/rrecuero/zepkit#readme",
   "dependencies": {
     "dotenv": "^6.2.0",
     "openzeppelin-eth": "^2.1.3",
-    "truffle-hdwallet-provider": "^1.0.3",
+    "truffle-hdwallet-provider": "^1.0.11",
     "zos-lib": "2.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "openzeppelin-test-helpers": "^0.3.0",
-    "zos": "^2.3.0"
+    "openzeppelin-test-helpers": "^0.3.0"
   }
 }

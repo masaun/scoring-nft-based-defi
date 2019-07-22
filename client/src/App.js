@@ -676,6 +676,24 @@ class App extends Component {
     );
   }
 
+  renderEscrow() {
+    return (
+      <div className={styles.wrapper}>
+      {!this.state.web3 && this.renderLoader()}
+      {this.state.web3 && !this.state.asset && (
+        this.renderDeployCheck('asset')
+      )}
+      {this.state.web3 && this.state.asset && (
+        <div className={styles.contracts}>
+          <h1>Escrow Contract is good to Go!</h1>
+          <div className={styles.widgets}>
+            <Web3Info {...this.state} />
+          </div>
+        </div>
+      )}
+      </div>
+    );
+  }
 
   render() {
     return (
@@ -688,6 +706,7 @@ class App extends Component {
           {this.state.route === 'asset' && this.renderAsset()}
           {this.state.route === 'exchange' && this.renderExchange()}
           {this.state.route === 'exchange/1' && this.renderExchangeDetail()}
+          {this.state.route === 'escrow' && this.renderEscrow()}
         <Footer />
       </div>
     );

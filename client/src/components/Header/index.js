@@ -33,8 +33,8 @@ const Header = () => (
           <li><a href="/exchange" className={styles.link}> Exchange</a></li>
         )}
 
-        {process.env.NODE_ENV !== 'escrow' && (
-          <li><a href="/escrow" className={styles.link}> Escrow</a></li>
+        {process.env.NODE_ENV !== 'escrow_payment' && (
+          <li><a href="/escrow_payment" className={styles.link}> EscrowPayment</a></li>
         )}
       </ul>
     </nav>

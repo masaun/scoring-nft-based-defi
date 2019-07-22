@@ -32,4 +32,12 @@ contract EscrowPayment is Escrow {
     function escrowWithdraw(address payable payee) public onlyPrimary {
         withdraw(payee);
     }
+
+
+    function test() public returns (string memory) {
+        string memory test = 'test';
+
+        return test;
+    }
+    
 }

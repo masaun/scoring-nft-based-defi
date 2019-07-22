@@ -72,6 +72,8 @@ class App extends Component {
     this.handleInputEnergyType = this.handleInputEnergyType.bind(this);
     this.handleInputPrice = this.handleInputPrice.bind(this);    
     this.sendListingRegister= this.sendListingRegister.bind(this);
+
+    this.sendEscrowDeposit = this.sendEscrowDeposit.bind(this);
   }
 
 
@@ -182,6 +184,22 @@ class App extends Component {
   
 
 
+  ///////--------------------- EscrowPayment ---------------------------
+  sendEscrowDeposit = async () => {
+    const { accounts, escrow_payment } = this.state;
+
+    const response_1 = await escrow_payment.methods.test().send({ from: accounts[0] })
+    const response_2 = await escrow_payment.methods.escrowDeposit(accounts[0]).send({ from: accounts[0] })
+
+    console.log('=== response of escrowDeposit function ===', response_1);  // Debug
+    console.log('=== response of escrowDeposit function ===', response_2);  // Debug
+
+    this.setState({
+      deposit_price: '',  // in progress
+    });
+  }
+
+
 
   //////////////////////////////////// 
   ///// Ganache
@@ -289,7 +307,7 @@ class App extends Component {
           deployedNetwork = EscrowPayment.networks[networkId.toString()];
           if (deployedNetwork) {
             instanceEscrowPayment = new web3.eth.Contract(
-              Exchange.abi,
+              EscrowPayment.abi,
               deployedNetwork && deployedNetwork.address,
             );
             console.log('=== instanceEscrowPayment ===', instanceEscrowPayment);
@@ -702,9 +720,10 @@ class App extends Component {
       {this.state.web3 && this.state.escrow_payment && (
         <div className={styles.contracts}>
           <h1>EscrowPayment Contract is good to Go!</h1>
-          <div className={styles.widgets}>
-            <Web3Info {...this.state} />
-          </div>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendEscrowDeposit}>Escrow Deposit</Button>
+          </Card>
         </div>
       )}
       </div>

@@ -202,12 +202,14 @@ class App extends Component {
     let Wallet = {};
     let Asset = {};
     let Exchange = {};
+    let EscrowPayment = {};
 
     try {
       Counter = require("../../build/contracts/Counter.json");
       Wallet = require("../../build/contracts/Wallet.json");
       Asset = require("../../build/contracts/Asset.json");        // Load ABI of contract of Asset
       Exchange = require("../../build/contracts/Exchange.json");  // Load ABI of contract of Exchange
+      EscrowPayment = require("../../build/contracts/EscrowPayment.json");  // Load ABI of contract of EscrowPayment
       // Counter = require("../../contracts/Counter.sol");
       // Wallet = require("../../contracts/Wallet.sol");
       // Asset = require("../../contracts/Asset.sol");
@@ -242,6 +244,7 @@ class App extends Component {
         let instanceWallet = null;
         let instanceAsset = null;
         let instanceExchange = null;
+        let instanceEscrowPayment = null;
         let deployedNetwork = null;
 
         if (Counter.networks) {
@@ -282,15 +285,25 @@ class App extends Component {
             console.log('=== instanceExchange ===', instanceExchange);
           }
         }
+        if (EscrowPayment.networks) {
+          deployedNetwork = EscrowPayment.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceEscrowPayment = new web3.eth.Contract(
+              Exchange.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceEscrowPayment ===', instanceEscrowPayment);
+          }
+        }
 
-        if (instance || instanceWallet || instanceAsset || instanceExchange) {
+        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange }, () => {
-              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange);
+            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment }, () => {
+              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment);
               setInterval(() => {
-                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange);
+                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment);
               }, 5000);
             });
         }
@@ -325,6 +338,9 @@ class App extends Component {
     }
     if (instanceExchange) {
       console.log('refreshValues of instanceExchange');
+    }
+    if (instanceExchange) {
+      console.log('refreshValues of instanceEscrowPayment');
     }
   }
 
@@ -680,10 +696,10 @@ class App extends Component {
     return (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
-      {this.state.web3 && !this.state.asset && (
-        this.renderDeployCheck('asset')
+      {this.state.web3 && !this.state.escrow_payment && (
+        this.renderDeployCheck('escrow_payment')
       )}
-      {this.state.web3 && this.state.asset && (
+      {this.state.web3 && this.state.escrow_payment && (
         <div className={styles.contracts}>
           <h1>EscrowPayment Contract is good to Go!</h1>
           <div className={styles.widgets}>

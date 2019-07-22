@@ -676,7 +676,7 @@ class App extends Component {
     );
   }
 
-  renderEscrow() {
+  renderEscrowPayment() {
     return (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
@@ -685,7 +685,7 @@ class App extends Component {
       )}
       {this.state.web3 && this.state.asset && (
         <div className={styles.contracts}>
-          <h1>Escrow Contract is good to Go!</h1>
+          <h1>EscrowPayment Contract is good to Go!</h1>
           <div className={styles.widgets}>
             <Web3Info {...this.state} />
           </div>
@@ -706,7 +706,7 @@ class App extends Component {
           {this.state.route === 'asset' && this.renderAsset()}
           {this.state.route === 'exchange' && this.renderExchange()}
           {this.state.route === 'exchange/1' && this.renderExchangeDetail()}
-          {this.state.route === 'escrow' && this.renderEscrow()}
+          {this.state.route === 'escrow_payment' && this.renderEscrowPayment()}
         <Footer />
       </div>
     );

@@ -3,15 +3,13 @@ const Asset = artifacts.require("./Asset.sol");
 module.exports = async(deployer, network, accounts) => {
     const name = "Asset Exchange Token";
     const symbol = "AET";
-    const tokenId = 1;
-    const tokenURI = "https://ipfs.io/ipfs/QmNgJ5tGRDNmXQyQQrehQBJWJXhQ6iPXazbiCrEc6odUHg";
+    const proxyRegistryAddress = "0x555e57c4762137241941620f086082569d6b0116";
 
     await deployer.deploy(
         Asset,
         name,
         symbol,
-        tokenId,
-        tokenURI,
+        proxyRegistryAddress,
         {from: accounts[0]}
     );
 };

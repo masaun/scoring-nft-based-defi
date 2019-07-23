@@ -34,6 +34,7 @@ contract EscrowPayment is Escrow {
     }
 
 
+    /*** Function for test ***/ 
     function test() public returns (string memory) {
         string memory test = 'test';
 

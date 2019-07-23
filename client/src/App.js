@@ -74,6 +74,8 @@ class App extends Component {
     this.sendListingRegister= this.sendListingRegister.bind(this);
 
     this.sendEscrowDeposit = this.sendEscrowDeposit.bind(this);
+    this.sendMintTo = this.sendMintTo.bind(this);
+    this.sendTokenURI = this.sendTokenURI.bind(this);
   }
 
 
@@ -198,6 +200,30 @@ class App extends Component {
       deposit_price: '',  // in progress
     });
   }
+
+
+
+  ////////--------------------- Asset（TradeERC721）---------------------------
+  sendMintTo = async () => {
+    const { accounts, asset } = this.state;
+    let _address = "0x555e57c4762137241941620f086082569d6b0116"
+
+    const response_1 = await asset.methods.mintTo(_address).send({ from: accounts[0] })
+    console.log('=== response of mintTo function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
+  }
+
+
+  sendTokenURI = async () => {
+    const { accounts, asset } = this.state;
+    let _tokenId = 5
+
+    const response_1 = await asset.methods.tokenURI(_tokenId).call()
+    console.log('=== response of tokenURI function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
+  }
+
+
+
+
 
 
 
@@ -510,26 +536,6 @@ class App extends Component {
     );
   }
 
-  renderAsset() {
-    return (
-      <div className={styles.wrapper}>
-      {!this.state.web3 && this.renderLoader()}
-      {this.state.web3 && !this.state.asset && (
-        this.renderDeployCheck('asset')
-      )}
-      {this.state.web3 && this.state.asset && (
-        <div className={styles.contracts}>
-          <h1>Asset Contract is good to Go!</h1>
-          <div className={styles.widgets}>
-            <Web3Info {...this.state} />
-          </div>
-        </div>
-      )}
-      </div>
-    );
-  }
-
-
   renderExchange() {
     const { accounts, exchange, owner_address, energy_type, price, transaction_hash, token_id, listingIndex } = this.state;
 
@@ -704,6 +710,30 @@ class App extends Component {
             </Table>
           </Card>
 
+        </div>
+      )}
+      </div>
+    );
+  }
+
+  renderAsset() {
+    return (
+      <div className={styles.wrapper}>
+      {!this.state.web3 && this.renderLoader()}
+      {this.state.web3 && !this.state.asset && (
+        this.renderDeployCheck('asset')
+      )}
+      {this.state.web3 && this.state.asset && (
+        <div className={styles.contracts}>
+          <h1>Asset Contract is good to Go!</h1>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendMintTo}> MintTo</Button>
+
+            <span style={{ padding: "20px" }}></span>
+
+            <Button onClick={this.sendTokenURI}> Get tokenURI</Button>
+          </Card>
         </div>
       )}
       </div>

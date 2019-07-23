@@ -19,5 +19,20 @@ contract Asset is TradeERC721Token {
     }
 
 
+    /**
+     * @dev Mints a token to an address with a tokenURI.
+     * @param _to address of the future owner of the token
+     */
+    function mintTo(address _to) public onlyOwner {
+    }
+
+
+    /**
+     * @dev calculates the next token ID based on value of _currentTokenId 
+     * @return uint256 for the next token ID
+     */
+    function _getNextTokenId() private view returns (uint256) {
+    }
     
+
 }

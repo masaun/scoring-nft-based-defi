@@ -35,4 +35,10 @@ contract Asset is TradeERC721Token {
     }
     
 
+    function baseTokenURI() public view returns (string memory) {
+    }
+
+    function tokenURI(uint256 _tokenId) public view returns (string memory) {
+    );
+
 }

@@ -75,6 +75,7 @@ class App extends Component {
 
     this.sendEscrowDeposit = this.sendEscrowDeposit.bind(this);
     this.sendMintTo = this.sendMintTo.bind(this);
+    this.sendTokenURI = this.sendTokenURI.bind(this);
   }
 
 
@@ -205,17 +206,21 @@ class App extends Component {
   ////////--------------------- Asset（TradeERC721）---------------------------
   sendMintTo = async () => {
     const { accounts, asset } = this.state;
-
     let _address = "0x555e57c4762137241941620f086082569d6b0116"
 
     const response_1 = await asset.methods.mintTo(_address).send({ from: accounts[0] })
-
     console.log('=== response of mintTo function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
-
-    // this.setState({
-    //   minted_token_quantity: '',  // in progress
-    // });
   }
+
+
+  sendTokenURI = async () => {
+    const { accounts, asset } = this.state;
+    let _tokenId = 5
+
+    const response_1 = await asset.methods.tokenURI(_tokenId).send({ from: accounts[0] })
+    console.log('=== response of tokenURI function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
+  }
+
 
 
 
@@ -724,6 +729,10 @@ class App extends Component {
 
           <Card width={'600px'} bg="primary">
             <Button onClick={this.sendMintTo}> MintTo</Button>
+
+            <span style={{ padding: "20px" }}></span>
+
+            <Button onClick={this.sendTokenURI}> Get tokenURI</Button>
           </Card>
         </div>
       )}

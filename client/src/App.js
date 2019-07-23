@@ -217,7 +217,7 @@ class App extends Component {
     const { accounts, asset } = this.state;
     let _tokenId = 5
 
-    const response_1 = await asset.methods.tokenURI(_tokenId).send({ from: accounts[0] })
+    const response_1 = await asset.methods.tokenURI(_tokenId).call()
     console.log('=== response of tokenURI function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
   }
 

@@ -36,9 +36,15 @@ contract Asset is TradeERC721Token {
     
 
     function baseTokenURI() public view returns (string memory) {
+        return "http://localhost:3000/exchange/";  // Specify URL
     }
 
-    function tokenURI(uint256 _tokenId) public view returns (string memory) {
-    );
+
+
+    function getTokenURI(uint256 _tokenId) public view returns (string memory) {
+        // [Note]： If it call external function, it must use "this" in front of function which is called
+        return TradeERC721Token(this).tokenURI(_tokenId);
+        //return this.tokenURI(_tokenId);
+    }
 
 }

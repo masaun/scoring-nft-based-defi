@@ -4,7 +4,7 @@ import "../votingMachines/VotingMachineCallbacksInterface.sol";
 import "../votingMachines/ProposalExecuteInterface.sol";
 import "../votingMachines/GenesisProtocol.sol";
 import "../Reputation.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Debug.sol";
 
 

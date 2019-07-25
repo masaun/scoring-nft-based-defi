@@ -1,10 +1,9 @@
 pragma solidity ^0.5.4;
 
-import "../../../../@daostack/infra/contracts/Reputation.sol";     // New path
-//import "@daostack/infra/contracts/Reputation.sol";   // Origin path
+import "../../../../@daostack/infra/contracts/Reputation.sol";
 import "./DAOToken.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "../../../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../../../openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 import "../libs/SafeERC20.sol";
 
 

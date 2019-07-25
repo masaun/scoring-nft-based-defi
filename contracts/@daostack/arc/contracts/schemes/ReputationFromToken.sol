@@ -1,7 +1,7 @@
 pragma solidity ^0.5.4;
 
 import "../controller/ControllerInterface.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "../../../../openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 import "./CurveInterface.sol";
 
 /**

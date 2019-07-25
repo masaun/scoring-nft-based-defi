@@ -1,8 +1,8 @@
 pragma solidity ^0.5.4;
 
 import "../universalSchemes/ContributionReward.sol";
-import "@daostack/infra/contracts/votingMachines/GenesisProtocol.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "../../../../@daostack/infra/contracts/votingMachines/GenesisProtocol.sol";
+import "../../../../openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 
 
 contract Redeemer {

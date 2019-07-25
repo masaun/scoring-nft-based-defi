@@ -2,7 +2,7 @@ pragma solidity ^0.5.4;
 
 import "../votingMachines/ProposalExecuteInterface.sol";
 import "../votingMachines/VotingMachineCallbacksInterface.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Debug.sol";
 import "../Reputation.sol";
 import "../votingMachines/AbsoluteVote.sol";

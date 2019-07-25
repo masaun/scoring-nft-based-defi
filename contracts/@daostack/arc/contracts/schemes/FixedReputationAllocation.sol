@@ -1,7 +1,7 @@
 pragma solidity ^0.5.4;
 
 import "../controller/ControllerInterface.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../../../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 
 /**

@@ -76,6 +76,8 @@ class App extends Component {
     this.sendEscrowDeposit = this.sendEscrowDeposit.bind(this);
     this.sendMintTo = this.sendMintTo.bind(this);
     this.sendTokenURI = this.sendTokenURI.bind(this);
+
+    this.sendScoringByThirdParty = this.sendScoringByThirdParty.bind(this);
   }
 
 
@@ -229,6 +231,33 @@ class App extends Component {
 
 
 
+  ////////--------------------- Scoring By Third Party ---------------------------
+  sendScoringByThirdParty = async () => {
+    const { accounts, scoring_by_third_party } = this.state;
+    let _proposalId = "0xb081ee2c193feb252ab2adf165dd99900339b171ec51fcd0f6cbc4a1c48a396f"
+    let _amount = 1000
+    let _beneficiary = "0x7c6db4e4d5f1477ef9c521e3cbf7dec20c0f2805"
+    let _stakingToken = "0xfba0b093cc18a8f060b96744d1ddc0cfd63e0b1f"
+
+
+    /**** Execute _getTotalReputationSupply function ****/
+    const response_1 = await scoring_by_third_party.methods._getTotalReputationSupply(_proposalId).call()  // Successful
+    console.log('=== response of _getTotalReputationSupply function of being inherited from ScoringByThirdParty.sol ===', response_1);
+
+
+    /**** Execute _stakingTokenTransfer function ****/
+    const response_4 = await scoring_by_third_party.methods._balanceOfStakingToken(_stakingToken, _proposalId).call()  // Successful
+    console.log('=== response of _balanceOfStakingToken function of being inherited from ScoringByThirdParty.sol ===', response_4);
+
+    /**** Execute _stakingTokenTransfer function ****/
+    const response_3 = await scoring_by_third_party.methods._mintReputation(_amount, _beneficiary, _proposalId).send({ from: accounts[0] })  // Fail
+    console.log('=== response of _mintReputation function of being inherited from ScoringByThirdParty.sol ===', response_3)
+
+
+    /**** Execute _stakingTokenTransfer function ****/
+    const response_2 = await scoring_by_third_party.methods._stakingTokenTransfer(_stakingToken, _beneficiary, _amount, _proposalId).send({ from: accounts[0] })   // Fail
+    console.log('=== response of _stakingTokenTransfer function of being inherited from ScoringByThirdParty.sol ===', response_2);  // Debug
+  }
 
 
 
@@ -253,13 +282,15 @@ class App extends Component {
     let Asset = {};
     let Exchange = {};
     let EscrowPayment = {};
+    let ScoringByThirdParty = {};
 
     try {
-      Counter = require("../../build/contracts/Counter.json");
-      Wallet = require("../../build/contracts/Wallet.json");
+      //Counter = require("../../build/contracts/Counter.json");
+      //Wallet = require("../../build/contracts/Wallet.json");
       Asset = require("../../build/contracts/Asset.json");        // Load ABI of contract of Asset
       Exchange = require("../../build/contracts/Exchange.json");  // Load ABI of contract of Exchange
       EscrowPayment = require("../../build/contracts/EscrowPayment.json");  // Load ABI of contract of EscrowPayment
+      ScoringByThirdParty = require("../../build/contracts/ScoringByThirdParty.json");  // Load ABI of contract of ScoringByThirdParty
       // Counter = require("../../contracts/Counter.sol");
       // Wallet = require("../../contracts/Wallet.sol");
       // Asset = require("../../contracts/Asset.sol");
@@ -295,6 +326,7 @@ class App extends Component {
         let instanceAsset = null;
         let instanceExchange = null;
         let instanceEscrowPayment = null;
+        let instanceScoringByThirdParty = null;
         let deployedNetwork = null;
 
         if (Counter.networks) {
@@ -345,15 +377,25 @@ class App extends Component {
             console.log('=== instanceEscrowPayment ===', instanceEscrowPayment);
           }
         }
+        if (ScoringByThirdParty.networks) {
+          deployedNetwork = ScoringByThirdParty.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceScoringByThirdParty = new web3.eth.Contract(
+              ScoringByThirdParty.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceScoringByThirdParty ===', instanceScoringByThirdParty);
+          }
+        }
 
-        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment) {
+        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment || instanceScoringByThirdParty) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment }, () => {
-              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment);
+            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment, scoring_by_third_party: instanceScoringByThirdParty }, () => {
+              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
               setInterval(() => {
-                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment);
+                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
               }, 5000);
             });
         }
@@ -376,7 +418,7 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange) => {
+  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty) => {
     if (instance) {
       this.getCount();
     }
@@ -389,8 +431,11 @@ class App extends Component {
     if (instanceExchange) {
       console.log('refreshValues of instanceExchange');
     }
-    if (instanceExchange) {
+    if (instanceEscrowPayment) {
       console.log('refreshValues of instanceEscrowPayment');
+    }
+    if (instanceScoringByThirdParty) {
+      console.log('refreshValues of instanceScoringByThirdParty');
     }
   }
 
@@ -766,6 +811,26 @@ class App extends Component {
     );
   }
 
+  renderScoringByThirdParty() {
+    return (
+      <div className={styles.wrapper}>
+      {!this.state.web3 && this.renderLoader()}
+      {this.state.web3 && !this.state.scoring_by_third_party && (
+        this.renderDeployCheck('scoring_by_third_party')
+      )}
+      {this.state.web3 && this.state.scoring_by_third_party && (
+        <div className={styles.contracts}>
+          <h1>ScoringByThirdParty Contract is good to Go!</h1>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendScoringByThirdParty}> Scoring By Third Party</Button>
+          </Card>
+        </div>
+      )}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className={styles.App}>
@@ -778,6 +843,7 @@ class App extends Component {
           {this.state.route === 'exchange' && this.renderExchange()}
           {this.state.route === 'exchange/1' && this.renderExchangeDetail()}
           {this.state.route === 'escrow_payment' && this.renderEscrowPayment()}
+          {this.state.route === 'scoring_by_third_party' && this.renderScoringByThirdParty()}
         <Footer />
       </div>
     );

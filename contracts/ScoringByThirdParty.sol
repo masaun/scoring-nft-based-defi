@@ -21,6 +21,19 @@ contract ScoringByThirdParty is VotingMachineCallbacks {
     }
     
 
+
+    function _balanceOfStakingToken(IERC20 _stakingToken, bytes32 _proposalId) public view returns(uint256) {
+        return VotingMachineCallbacks(this).balanceOfStakingToken(_stakingToken, _proposalId);
+    }
+
+
+
+
+    function _mintReputation(uint256 _amount, address _beneficiary, bytes32 _proposalId) public returns (bool) {
+        return VotingMachineCallbacks(this).mintReputation(_amount, _beneficiary,  _proposalId);
+    }
+
+
     function _stakingTokenTransfer(
         IERC20 _stakingToken,
         address _beneficiary,

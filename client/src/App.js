@@ -235,19 +235,27 @@ class App extends Component {
   sendScoringByThirdParty = async () => {
     const { accounts, scoring_by_third_party } = this.state;
     let _proposalId = "0xb081ee2c193feb252ab2adf165dd99900339b171ec51fcd0f6cbc4a1c48a396f"
+    let _amount = 1000
+    let _beneficiary = "0x7c6db4e4d5f1477ef9c521e3cbf7dec20c0f2805"
+    let _stakingToken = "0xfba0b093cc18a8f060b96744d1ddc0cfd63e0b1f"
+
 
     /**** Execute _getTotalReputationSupply function ****/
-    const response_1 = await scoring_by_third_party.methods._getTotalReputationSupply(_proposalId).call()
-    console.log('=== response of _getTotalReputationSupply function of being inherited from ScoringByThirdParty.sol ===', response_1);  // Debug
+    const response_1 = await scoring_by_third_party.methods._getTotalReputationSupply(_proposalId).call()  // Successful
+    console.log('=== response of _getTotalReputationSupply function of being inherited from ScoringByThirdParty.sol ===', response_1);
 
 
     /**** Execute _stakingTokenTransfer function ****/
-    let _stakingToken = "0xfba0b093cc18a8f060b96744d1ddc0cfd63e0b1f"
-    let _beneficiary = "0x7c6db4e4d5f1477ef9c521e3cbf7dec20c0f2805"
-    let _amount = 1000
-    let _proposalId = "0x53d8bc113d19819257c53ab44fe0bf0deb9c8eb02ffe16b0940f8fce6a578309"
+    const response_4 = await scoring_by_third_party.methods._balanceOfStakingToken(_stakingToken, _proposalId).call()  // Successful
+    console.log('=== response of _balanceOfStakingToken function of being inherited from ScoringByThirdParty.sol ===', response_4);
 
-    const response_2 = await scoring_by_third_party.methods._stakingTokenTransfer(_stakingToken, _beneficiary, _amount, _proposalId).send({ from: accounts[0] })
+    /**** Execute _stakingTokenTransfer function ****/
+    const response_3 = await scoring_by_third_party.methods._mintReputation(_amount, _beneficiary, _proposalId).send({ from: accounts[0] })  // Fail
+    console.log('=== response of _mintReputation function of being inherited from ScoringByThirdParty.sol ===', response_3)
+
+
+    /**** Execute _stakingTokenTransfer function ****/
+    const response_2 = await scoring_by_third_party.methods._stakingTokenTransfer(_stakingToken, _beneficiary, _amount, _proposalId).send({ from: accounts[0] })   // Fail
     console.log('=== response of _stakingTokenTransfer function of being inherited from ScoringByThirdParty.sol ===', response_2);  // Debug
   }
 

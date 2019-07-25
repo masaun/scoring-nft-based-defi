@@ -36,6 +36,10 @@ const Header = () => (
         {process.env.NODE_ENV !== 'escrow_payment' && (
           <li><a href="/escrow_payment" className={styles.link}> EscrowPayment</a></li>
         )}
+
+        {process.env.NODE_ENV !== 'scoring_by_third_party' && (
+          <li><a href="/scoring_by_third_party" className={styles.link}> ScoringByThirdParty</a></li>
+        )}
       </ul>
     </nav>
   </div>

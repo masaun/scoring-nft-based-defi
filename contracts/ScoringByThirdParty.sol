@@ -21,4 +21,14 @@ contract ScoringByThirdParty is VotingMachineCallbacks {
     }
     
 
+    function _stakingTokenTransfer(
+        IERC20 _stakingToken,
+        address _beneficiary,
+        uint256 _amount,
+        bytes32 _proposalId
+    ) public view returns (bool)
+    {
+        return VotingMachineCallbacks(this).stakingTokenTransfer(_stakingToken, _beneficiary, _amount, _proposalId);
+    }
+
 }

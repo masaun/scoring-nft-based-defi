@@ -6,9 +6,7 @@ import "./@daostack/arc/contracts/votingMachines/VotingMachineCallbacks.sol";
 
 contract ScoringByThirdParty is VotingMachineCallbacks {
 
-    constructor(
-        // in progress
-    )
+    constructor (address _stakingToken)
         public
         VotingMachineCallbacks()  // Assign value to constructor of VotingMachineCallbacks.sol
     {
@@ -23,7 +21,7 @@ contract ScoringByThirdParty is VotingMachineCallbacks {
 
 
     function _balanceOfStakingToken(IERC20 _stakingToken, bytes32 _proposalId) public view returns(uint256) {
-        return VotingMachineCallbacks(this).balanceOfStakingToken(_stakingToken, _proposalId);
+        return VotingMachineCallbacks(this).balanceOfStakingToken(IERC20(_stakingToken), _proposalId);
     }
 
 

@@ -255,8 +255,8 @@ class App extends Component {
     let EscrowPayment = {};
 
     try {
-      Counter = require("../../build/contracts/Counter.json");
-      Wallet = require("../../build/contracts/Wallet.json");
+      //Counter = require("../../build/contracts/Counter.json");
+      //Wallet = require("../../build/contracts/Wallet.json");
       Asset = require("../../build/contracts/Asset.json");        // Load ABI of contract of Asset
       Exchange = require("../../build/contracts/Exchange.json");  // Load ABI of contract of Exchange
       EscrowPayment = require("../../build/contracts/EscrowPayment.json");  // Load ABI of contract of EscrowPayment

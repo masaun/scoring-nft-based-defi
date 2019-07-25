@@ -16,7 +16,7 @@ contract ScoringByThirdParty is VotingMachineCallbacks {
     }
 
 
-    function getTotalReputationSupply(bytes32 _proposalId) public view returns (uint256) {
+    function _getTotalReputationSupply(bytes32 _proposalId) public view returns (uint256) {
         return VotingMachineCallbacks(this).getTotalReputationSupply(_proposalId);
     }
     

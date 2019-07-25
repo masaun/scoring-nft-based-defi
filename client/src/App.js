@@ -225,8 +225,8 @@ class App extends Component {
     // const response_2 = await asset.methods.tokenURI(_tokenId).call()
     // console.log('=== response of tokenURI function of being inherited from TradeERC721Token.sol ===', response_2);  // Debug
 
-    const response_3 = await asset.methods.getTokenURI(_tokenId).call()
-    console.log('=== response of getTokenURI function of being inherited from TradeERC721Token.sol ===', response_3);  // Debug
+    const response_3 = await asset.methods._getTokenURI(_tokenId).call()
+    console.log('=== response of _getTokenURI function of being inherited from TradeERC721Token.sol ===', response_3);  // Debug
   }
 
 
@@ -236,7 +236,7 @@ class App extends Component {
     const { accounts, scoring_by_third_party } = this.state;
     let _proposalId = "0xb081ee2c193feb252ab2adf165dd99900339b171ec51fcd0f6cbc4a1c48a396f"
 
-    const response_1 = await scoring_by_third_party.methods.getTotalReputationSupply().call()
+    const response_1 = await scoring_by_third_party.methods.getTotalReputationSupply(_proposalId).call()
     console.log('=== response of getTotalReputationSupply function of being inherited from ScoringByThirdParty.sol ===', response_1);  // Debug
   }
 

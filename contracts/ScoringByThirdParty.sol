@@ -26,7 +26,7 @@ contract ScoringByThirdParty is VotingMachineCallbacks {
         address _beneficiary,
         uint256 _amount,
         bytes32 _proposalId
-    ) public view returns (bool)
+    ) public returns (bool)
     {
         return VotingMachineCallbacks(this).stakingTokenTransfer(_stakingToken, _beneficiary, _amount, _proposalId);
     }

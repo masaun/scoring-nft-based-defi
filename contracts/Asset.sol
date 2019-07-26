@@ -14,7 +14,8 @@ contract Asset is TradeableERC721Token, CreatureFactory {
     constructor(
         string memory name,
         string memory symbol,
-        address proxyRegistryAddress
+        address proxyRegistryAddress,
+        address nftAddress
     )
         public
         TradeableERC721Token(name, symbol, proxyRegistryAddress)  // Assign value to constructor of TradeERC721Token.sol
@@ -56,7 +57,7 @@ contract Asset is TradeableERC721Token, CreatureFactory {
 
     /////////// ------ Reference from CreatureFactory.sol ---------------------
     function _mint(uint256 _optionId, address _toAddres) public returns (bool) {    
-        CreatureFactory.mint(_optionId, _toAddres);
+        CreatureFactory(this).mint(_optionId, _toAddres);
         return true;
     }
     

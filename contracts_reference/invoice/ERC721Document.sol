@@ -1,11 +1,15 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.0 <0.7.0;
+//pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
-import "openzeppelin-solidity/contracts/MerkleProof.sol";
-import "contracts/AnchorRegistry.sol";
+import "../openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";    // New
+//import "../openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";  // Original
+import "../openzeppelin-solidity/contracts/cryptography/MerkleProof.sol";
+//import "../openzeppelin-solidity/contracts/MerkleProof.sol";  
+import "./AnchorRegistry.sol";
 
 
-contract ERC721Document is ERC721Token {
+contract ERC721Document is ERC721Full {
+//contract ERC721Document is ERC721Token {
   bytes4 internal constant InterfaceId_AnchorRegistry = 0x04d466b2;
   /*
    * 0x04d466b2 ===
@@ -31,8 +35,9 @@ contract ERC721Document is ERC721Token {
    * @param _anchorRegistry address The address of the anchor registry
    * that is backing this token's mint method.
    */
-  constructor(string _name, string _symbol, address _anchorRegistry) 
-  ERC721Token(_name, _symbol) 
+  constructor(string memory _name, string memory _symbol, address _anchorRegistry) 
+  ERC721Full(_name, _symbol) 
+  //ERC721Token(_name, _symbol) 
   public 
   {
     require(
@@ -77,9 +82,9 @@ contract ERC721Document is ERC721Token {
     uint256 _tokenId, 
     bytes32 _documentId, 
     bytes32 _merkleRoot, 
-    bytes32[] _proof, 
-    string _leafName,
-    string _leafValue,
+    bytes32[] calldata _proof, 
+    string calldata _leafName,
+    string calldata _leafValue,
     bytes32 _leafSalt 
   ) 
   external 
@@ -126,7 +131,7 @@ contract ERC721Document is ERC721Token {
     uint256 _tokenId, 
     bytes32 _documentId, 
     bytes32 _merkleRoot, 
-    bytes32[] _proof, 
+    bytes32[] calldata _proof, 
     bytes32 _leaf 
   ) 
   external 
@@ -194,8 +199,8 @@ contract ERC721Document is ERC721Token {
    * @return byte32 keccak256 hash of the concatenated plain-text values
    */
   function _hashLeafData(
-    string _leafName,
-    string _leafValue,
+    string memory _leafName,
+    string memory _leafValue,
     bytes32 _leafSalt 
   ) 
   internal pure

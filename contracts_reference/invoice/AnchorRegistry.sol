@@ -1,6 +1,7 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.0 <0.7.0;
+//pragma solidity ^0.4.24;
 
-import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
+import "../openzeppelin-solidity/contracts/introspection/ERC165.sol";
 
 
 /**

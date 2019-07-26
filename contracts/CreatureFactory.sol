@@ -1,10 +1,10 @@
 pragma solidity ^0.5.0;
 
-import "../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./Factory.sol";
-import "./Creature.sol";
-import "./CreatureLootBox.sol";
-import "./Strings.sol";
+import "./openzeppelin-solidity/contracts/ownership/Ownable.sol";
+//import "./opensea/contracts/Factory.sol";
+import "./opensea/contracts/Creature.sol";
+import "./opensea/contracts/CreatureLootBox.sol";
+import "./opensea/contracts/Strings.sol";
 
 contract CreatureFactory is Ownable {
 //contract CreatureFactory is Factory, Ownable {

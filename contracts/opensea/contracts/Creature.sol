@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "./TradeableERC721Token.sol";
+import "../../TradeableERC721Token.sol";
 import "../../openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 /**

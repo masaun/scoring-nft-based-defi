@@ -1,7 +1,8 @@
 pragma solidity ^0.5.0;
 
 //import "./Asset.sol";  // Import Non Fungible Token（ERC721 Token）
-import './TradeERC721Token.sol';
+import './TradeableERC721Token.sol';
+//import './TradeERC721Token.sol';
 import './openzeppelin-solidity/contracts/ownership/Ownable.sol';
 
 
@@ -9,7 +10,7 @@ import './openzeppelin-solidity/contracts/ownership/Ownable.sol';
 /**
  * The Exchange contract does this and that buy and sell
  */
-contract Exchange is Ownable, TradeERC721Token {
+contract Exchange is Ownable, TradeableERC721Token {
 
     uint public tokenId;  // ID of ERC721 Token
 
@@ -126,7 +127,7 @@ contract Exchange is Ownable, TradeERC721Token {
         address _proxyRegistryAddress,
         bytes32[] memory proposalNames
     ) 
-        TradeERC721Token(_name, _symbol, _proxyRegistryAddress) 
+        TradeableERC721Token(_name, _symbol, _proxyRegistryAddress) 
         public 
         payable 
     {

@@ -76,6 +76,7 @@ class App extends Component {
     this.sendEscrowDeposit = this.sendEscrowDeposit.bind(this);
     this.sendMintTo = this.sendMintTo.bind(this);
     this.sendTokenURI = this.sendTokenURI.bind(this);
+    this.sendMint = this.sendMint.bind(this);
 
     this.sendScoringByThirdParty = this.sendScoringByThirdParty.bind(this);
   }
@@ -227,6 +228,17 @@ class App extends Component {
 
     const response_3 = await asset.methods.getTokenURI(_tokenId).call()
     console.log('=== response of getTokenURI function of being inherited from TradeableERC721Token.sol ===', response_3);  // Debug
+  }
+
+
+  sendMint = async () => {
+    const { accounts, asset } = this.state;
+
+    let _optionId = 1
+    let _toAddress = "0x555e57c4762137241941620f086082569d6b0116"
+
+    const response_1 = await asset.methods.mint(_optionId, _toAddress).send({ from: accounts[0] })
+    console.log('=== response of mint function of being inherited from CreatureFactory.sol ===', response_1);  // Debug
   }
 
 
@@ -784,6 +796,12 @@ class App extends Component {
             <span style={{ padding: "20px" }}></span>
 
             <Button onClick={this.sendTokenURI}> Get tokenURI</Button>
+          </Card>
+
+          <span style={{ padding: "20px" }}></span>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendMint}> Mint（CreatureFactory）</Button>
           </Card>
         </div>
       )}

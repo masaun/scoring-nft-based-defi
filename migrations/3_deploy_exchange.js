@@ -1,5 +1,5 @@
 const Exchange = artifacts.require("./Exchange.sol");
-const TradeERC721Token = artifacts.require("./TradeERC721Token.sol");
+const TradeERC721Token = artifacts.require("./TradeableERC721Token.sol");
 
 // Seller Address which is called when it execute constructor
 const _seller = "0x80854256dabb71b5a93bda8e66694d3c2403d68e";

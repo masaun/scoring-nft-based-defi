@@ -1,5 +1,5 @@
-const ERC721Document = artifacts.require("ERC721Document");
-const MockAnchorRegistry = artifacts.require("MockAnchorRegistry")
+var ERC721Document = artifacts.require("ERC721Document");
+var MockAnchorRegistry = artifacts.require("MockAnchorRegistry")
 
 module.exports = function(deployer) {
   // The address of the anchor registry would have to come from the deploy scripts

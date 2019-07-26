@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import './openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol';
 import './openzeppelin-solidity/contracts/ownership/Ownable.sol';
-import './Strings.sol';
+import './opensea/contracts/Strings.sol';
 
 contract OwnableDelegateProxy { }
 
@@ -11,10 +11,10 @@ contract ProxyRegistry {
 }
 
 /**
- * @title TradeERC721Token
+ * @title TradeableERC721Token
  * TradeableERC721Token - ERC721 contract that whitelists a trading address, and has minting functionality.
  */
-contract TradeERC721Token is ERC721Full, Ownable {
+contract TradeableERC721Token is ERC721Full, Ownable {
   using Strings for string;
 
   address proxyRegistryAddress;
@@ -51,6 +51,7 @@ contract TradeERC721Token is ERC721Full, Ownable {
 
   function baseTokenURI() public view returns (string memory) {
     return "http://localhost:3000/exchange/";  // Specify URL
+    //return "";
   }
 
   function tokenURI(uint256 _tokenId) external view returns (string memory) {

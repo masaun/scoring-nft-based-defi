@@ -4,9 +4,12 @@ pragma solidity ^0.5.0;
 //import "./openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 //import "./TradeERC721Token.sol";
 import "./opensea/contracts/TradeableERC721Token.sol";
+import "./opensea/contracts/CreatureFactory.sol";
 
 
-contract Asset is TradeableERC721Token {
+contract Asset is TradeableERC721Token, CreatureFactory {
+
+    address nftAddress;
 
     constructor(
         string memory name,
@@ -15,6 +18,7 @@ contract Asset is TradeableERC721Token {
     )
         public
         TradeableERC721Token(name, symbol, proxyRegistryAddress)  // Assign value to constructor of TradeERC721Token.sol
+        CreatureFactory(proxyRegistryAddress, nftAddress)
     {
         // in progress
     }
@@ -48,4 +52,12 @@ contract Asset is TradeableERC721Token {
         //return this.tokenURI(_tokenId);
     }
 
+
+
+    /////////// ------ Reference from CreatureFactory.sol ---------------------
+    function _mint(uint256 _optionId, address _toAddres) public returns (bool) {    
+        CreatureFactory.mint(_optionId, _toAddres);
+        return true;
+    }
+    
 }

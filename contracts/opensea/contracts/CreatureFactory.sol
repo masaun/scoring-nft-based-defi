@@ -6,7 +6,8 @@ import "./Creature.sol";
 import "./CreatureLootBox.sol";
 import "./Strings.sol";
 
-contract CreatureFactory is Factory, Ownable {
+contract CreatureFactory is Ownable {
+//contract CreatureFactory is Factory, Ownable {
   using Strings for string;
 
   address public proxyRegistryAddress;

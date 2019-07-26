@@ -50,7 +50,8 @@ contract TradeableERC721Token is ERC721Full, Ownable {
   }
 
   function baseTokenURI() public view returns (string memory) {
-    return "";
+    return "http://localhost:3000/exchange/";  // Specify URL
+    //return "";
   }
 
   function tokenURI(uint256 _tokenId) external view returns (string memory) {

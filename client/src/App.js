@@ -211,7 +211,7 @@ class App extends Component {
     let _address = "0x555e57c4762137241941620f086082569d6b0116"
 
     const response_1 = await asset.methods.mintTo(_address).send({ from: accounts[0] })
-    console.log('=== response of mintTo function of being inherited from TradeERC721Token.sol ===', response_1);  // Debug
+    console.log('=== response of mintTo function of being inherited from TradeableERC721Token.sol ===', response_1);  // Debug
   }
 
 
@@ -226,7 +226,7 @@ class App extends Component {
     // console.log('=== response of tokenURI function of being inherited from TradeERC721Token.sol ===', response_2);  // Debug
 
     const response_3 = await asset.methods.getTokenURI(_tokenId).call()
-    console.log('=== response of getTokenURI function of being inherited from TradeERC721Token.sol ===', response_3);  // Debug
+    console.log('=== response of getTokenURI function of being inherited from TradeableERC721Token.sol ===', response_3);  // Debug
   }
 
 

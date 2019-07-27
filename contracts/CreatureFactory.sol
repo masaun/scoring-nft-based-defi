@@ -30,7 +30,11 @@ contract CreatureFactory is Ownable {
   uint256 LOOTBOX_OPTION = 2;
   uint256 NUM_CREATURES_IN_MULTIPLE_CREATURE_OPTION = 4;
 
-  constructor(address _proxyRegistryAddress, address _nftAddress) public {
+  constructor(
+    address _proxyRegistryAddress, 
+    address _nftAddress
+  ) public 
+  {
     proxyRegistryAddress = _proxyRegistryAddress;
     nftAddress = _nftAddress;
     lootBoxNftAddress = address(new CreatureLootBox(_proxyRegistryAddress, address(this)));

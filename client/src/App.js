@@ -7,6 +7,8 @@ import Web3Info from "./components/Web3Info/index.js";
 import CounterUI from "./components/Counter/index.js";
 import Wallet from "./components/Wallet/index.js";
 import Instructions from "./components/Instructions/index.js";
+//import Provable from './components/ProvableCrowdsale/index'  // Oracle
+
 
 import { Loader, Button, Card, Input, Heading, Table, Form } from 'rimble-ui';
 import { Grid } from 'react-bootstrap';
@@ -849,6 +851,26 @@ class App extends Component {
     );
   }
 
+  renderProvable() {
+    return (
+      <div className={styles.wrapper}>
+      {!this.state.web3 && this.renderLoader()}
+      {this.state.web3 && !this.state.scoring_by_third_party && (
+        this.renderDeployCheck('scoring_by_third_party')
+      )}
+      {this.state.web3 && this.state.scoring_by_third_party && (
+        <div className={styles.contracts}>
+          <h1>Provable Contract is good to Go!</h1>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendScoringByThirdParty}> Provable</Button>
+          </Card>
+        </div>
+      )}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className={styles.App}>
@@ -862,6 +884,7 @@ class App extends Component {
           {this.state.route === 'exchange/1' && this.renderExchangeDetail()}
           {this.state.route === 'escrow_payment' && this.renderEscrowPayment()}
           {this.state.route === 'scoring_by_third_party' && this.renderScoringByThirdParty()}
+          {this.state.route === 'provable' && this.renderProvable()}
         <Footer />
       </div>
     );

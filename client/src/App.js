@@ -350,6 +350,7 @@ class App extends Component {
         let instanceExchange = null;
         let instanceEscrowPayment = null;
         let instanceScoringByThirdParty = null;
+        let instanceProvableOracle = null;
         let deployedNetwork = null;
 
         if (Counter.networks) {
@@ -410,15 +411,25 @@ class App extends Component {
             console.log('=== instanceScoringByThirdParty ===', instanceScoringByThirdParty);
           }
         }
+        if (ProvableOracle.networks) {
+          deployedNetwork = ProvableOracle.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceScoringByThirdParty = new web3.eth.Contract(
+              ProvableOracle.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceProvableOracley ===', instanceProvableOracle);
+          }
+        }
 
-        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment || instanceScoringByThirdParty) {
+        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment || instanceScoringByThirdParty || instanceProvableOracle) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment, scoring_by_third_party: instanceScoringByThirdParty }, () => {
-              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
+            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment, scoring_by_third_party: instanceScoringByThirdParty, provable_oracle: instanceProvableOracle }, () => {
+              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle);
               setInterval(() => {
-                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
+                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle);
               }, 5000);
             });
         }
@@ -441,7 +452,7 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty) => {
+  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle) => {
     if (instance) {
       this.getCount();
     }
@@ -459,6 +470,9 @@ class App extends Component {
     }
     if (instanceScoringByThirdParty) {
       console.log('refreshValues of instanceScoringByThirdParty');
+    }
+    if (instanceProvableOracle) {
+      console.log('refreshValues of instanceProvableOracle');
     }
   }
 
@@ -868,15 +882,15 @@ class App extends Component {
     return (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
-      {this.state.web3 && !this.state.scoring_by_third_party && (
-        this.renderDeployCheck('scoring_by_third_party')
+      {this.state.web3 && !this.state.provable_oracle && (
+        this.renderDeployCheck('provable_oracle')
       )}
-      {this.state.web3 && this.state.scoring_by_third_party && (
+      {this.state.web3 && this.state.provable_oracle && (
         <div className={styles.contracts}>
           <h1>Provable Contract is good to Go!</h1>
 
           <Card width={'600px'} bg="primary">
-            <Button onClick={this.sendScoringByThirdParty}> Provable</Button>
+            <Button> Provable</Button>
           </Card>
         </div>
       )}

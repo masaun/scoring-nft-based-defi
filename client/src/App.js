@@ -79,6 +79,7 @@ class App extends Component {
     this.sendMintTo = this.sendMintTo.bind(this);
     this.sendTokenURI = this.sendTokenURI.bind(this);
     this.sendMint = this.sendMint.bind(this);
+    this.sendProvableOracleRequest = this.sendProvableOracleRequest.bind(this);
 
     this.sendScoringByThirdParty = this.sendScoringByThirdParty.bind(this);
   }
@@ -204,6 +205,14 @@ class App extends Component {
     this.setState({
       deposit_price: '',  // in progress
     });
+  }
+
+
+  sendProvableOracleRequest = async () => {
+    const { accounts, escrow_payment } = this.state;
+
+    const response_1 = await escrow_payment.methods.provableOracleRequest().send({ from: accounts[0] })
+    console.log('=== response of escrowDeposit function ===', response_1);  // Debug
   }
 
 
@@ -824,6 +833,10 @@ class App extends Component {
 
           <Card width={'600px'} bg="primary">
             <Button onClick={this.sendEscrowDeposit}>Escrow Deposit</Button>
+          </Card>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendProvableOracleRequest}>Provable Oracle Request</Button>
           </Card>
         </div>
       )}

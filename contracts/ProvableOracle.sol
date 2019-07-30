@@ -1,24 +1,19 @@
 pragma solidity ^0.5.0;
 
-import "./ProvableCrowdsale/Provable.sol";
+import "./Provable.sol";
 
 
 contract ProvableOracle is usingOraclize {
-    constructor(
-    )
-        public
-    {
-        // in progress
-    }
 
+    constructor(address sampleAddress) public {}
 
     function getPriceViaProvable()
         public
         payable
     {
-        return oraclize_query(
+        oraclize_query(
             "URL",
-            "json(https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR).result.XETHZUSD.c.0"
+            "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
         );
     }
     

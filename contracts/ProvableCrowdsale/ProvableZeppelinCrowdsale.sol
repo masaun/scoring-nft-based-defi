@@ -14,7 +14,8 @@ interface SimpleTokenInterface {
 
 }
 
-contract ProvableZeppelinCrowdsale is usingOraclize, Initializable {
+contract ProvableZeppelinCrowdsale is usingOraclize {
+//contract ProvableZeppelinCrowdsale is usingOraclize, Initializable {
 
     address public owner;
     address public tokenAddress;
@@ -34,15 +35,24 @@ contract ProvableZeppelinCrowdsale is usingOraclize, Initializable {
         uint256 _amount
     );
 
-    function initialize(
+    constructor(
         address _tokenAddress
     )
-        initializer
         public
     {
         owner = msg.sender;
         tokenAddress = _tokenAddress;
     }
+
+    // function initialize(
+    //     address _tokenAddress
+    // )
+    //     initializer
+    //     public
+    // {
+    //     owner = msg.sender;
+    //     tokenAddress = _tokenAddress;
+    // }
 
     function getEthPriceViaProvable()
         public

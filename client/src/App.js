@@ -208,15 +208,6 @@ class App extends Component {
   }
 
 
-  sendProvableOracleRequest = async () => {
-    const { accounts, escrow_payment } = this.state;
-
-    const response_1 = await escrow_payment.methods.provableOracleRequest().send({ from: accounts[0] })
-    console.log('=== response of escrowDeposit function ===', response_1);  // Debug
-  }
-
-
-
   ////////--------------------- Asset（TradeERC721）---------------------------
   sendMintTo = async () => {
     const { accounts, asset } = this.state;
@@ -283,6 +274,14 @@ class App extends Component {
   }
 
 
+
+  ////////--------------------- Provable Oracle ---------------------------
+  sendProvableOracleRequest = async () => {
+    const { accounts, provable_oracle } = this.state;
+
+    const response_1 = await provable_oracle.methods.provableOracleRequest().send({ from: accounts[0] })
+    console.log('=== response of provableOracleRequest function ===', response_1);  // Debug
+  }
 
 
   //////////////////////////////////// 
@@ -850,10 +849,6 @@ class App extends Component {
           <Card width={'600px'} bg="primary">
             <Button onClick={this.sendEscrowDeposit}>Escrow Deposit</Button>
           </Card>
-
-          <Card width={'600px'} bg="primary">
-            <Button onClick={this.sendProvableOracleRequest}>Provable Oracle Request</Button>
-          </Card>
         </div>
       )}
       </div>
@@ -890,9 +885,9 @@ class App extends Component {
       {this.state.web3 && this.state.provable_oracle && (
         <div className={styles.contracts}>
           <h1>Provable Contract is good to Go!</h1>
-
+         
           <Card width={'600px'} bg="primary">
-            <Button> Provable</Button>
+            <Button onClick={this.sendProvableOracleRequest}>Provable Oracle Request</Button>
           </Card>
         </div>
       )}

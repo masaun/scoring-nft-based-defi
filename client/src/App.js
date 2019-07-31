@@ -279,7 +279,9 @@ class App extends Component {
   sendProvableOracleRequest = async () => {
     const { accounts, provable_oracle } = this.state;
 
-    const response_1 = await provable_oracle.methods.getPriceViaProvable().send({ from: accounts[0] })
+    const gasAmount = 1e6
+
+    const response_1 = await provable_oracle.methods.getPriceViaProvable().send({ gas: gasAmount, from: accounts[0] })
     console.log('=== response of getPriceViaProvable function ===', response_1);  // Debug
   }
 

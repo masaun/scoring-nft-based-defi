@@ -82,6 +82,9 @@ class App extends Component {
     this.sendProvableOracleRequest = this.sendProvableOracleRequest.bind(this);
 
     this.sendScoringByThirdParty = this.sendScoringByThirdParty.bind(this);
+
+    this.sendCreateProduct = this.sendCreateProduct.bind(this);
+    this.sendPurchaseProduct = this.sendPurchaseProduct.bind(this);
   }
 
 
@@ -243,6 +246,21 @@ class App extends Component {
     console.log('=== response of mint function of being inherited from CreatureFactory.sol ===', response_1);  // Debug
   }
 
+
+  sendCreateProduct = async () => {
+    const { accounts, asset } = this.state;
+    let _name = "Solar Panel"
+    let _price = 1000
+    const response_1 = await asset.methods.createProduct(_name, _price).send({ from: accounts[0] })
+    console.log('=== response of createProduct function of being inherited from Marketplace.sol ===', response_1);  // Debug
+  }
+  
+  sendPurchaseProduct = async () => {
+    const { accounts, asset } = this.state;
+    let _id = 1
+    const response_1 = await asset.methods.purchaseProduct(_id).send({ from: accounts[0] })
+    console.log('=== response of purchaseProduct function of being inherited from Marketplace.sol ===', response_1);  // Debug
+  }
 
 
   ////////--------------------- Scoring By Third Party ---------------------------
@@ -830,6 +848,16 @@ class App extends Component {
 
           <Card width={'600px'} bg="primary">
             <Button onClick={this.sendMint}> Mint（CreatureFactory）</Button>
+          </Card>
+
+          <span style={{ padding: "20px" }}></span>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendCreateProduct}> Create Product（Marketplace.sol）</Button>
+
+            <span style={{ padding: "20px" }}></span>
+
+            <Button onClick={this.sendPurchaseProduct}> Purchase Product（Marketplace.sol）</Button>
           </Card>
         </div>
       )}

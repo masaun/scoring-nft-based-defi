@@ -20,8 +20,8 @@ contract Marketplace {
         string name,
         uint price,
         address owner,
-        bool purchased,
-    )
+        bool purchased
+    );
 
 
     constructor() public {
@@ -44,9 +44,9 @@ contract Marketplace {
             productCount,
             _name,
             _price,
-            msg.sender
+            msg.sender,
             false
-        )
+        );
     }
 
 

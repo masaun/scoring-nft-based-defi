@@ -306,6 +306,7 @@ class App extends Component {
     let Exchange = {};
     let EscrowPayment = {};
     let ScoringByThirdParty = {};
+    let ProvableOracle = {};
 
     try {
       //Counter = require("../../build/contracts/Counter.json");
@@ -314,6 +315,7 @@ class App extends Component {
       Exchange = require("../../build/contracts/Exchange.json");  // Load ABI of contract of Exchange
       EscrowPayment = require("../../build/contracts/EscrowPayment.json");  // Load ABI of contract of EscrowPayment
       ScoringByThirdParty = require("../../build/contracts/ScoringByThirdParty.json");  // Load ABI of contract of ScoringByThirdParty
+      ProvableOracle = require("../../build/contracts/ProvableOracle.json");  // Load ABI of contract of ProvableOracle
       // Counter = require("../../contracts/Counter.sol");
       // Wallet = require("../../contracts/Wallet.sol");
       // Asset = require("../../contracts/Asset.sol");
@@ -414,7 +416,7 @@ class App extends Component {
         if (ProvableOracle.networks) {
           deployedNetwork = ProvableOracle.networks[networkId.toString()];
           if (deployedNetwork) {
-            instanceScoringByThirdParty = new web3.eth.Contract(
+            instanceProvableOracle = new web3.eth.Contract(
               ProvableOracle.abi,
               deployedNetwork && deployedNetwork.address,
             );

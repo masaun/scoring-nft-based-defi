@@ -1,8 +1,9 @@
 pragma solidity ^0.5.0;
 
-import "zos-lib/contracts/Initializable.sol";
+//import "zos-lib/contracts/Initializable.sol";
 
-contract SimpleToken is Initializable {
+contract SimpleToken {
+//contract SimpleToken is Initializable {
 
     string public name;
     string public symbol;
@@ -18,13 +19,12 @@ contract SimpleToken is Initializable {
         uint256 _numberOfTokens
     );
 
-    function initialize(
+    constructor(
         string memory _name,
         string memory _symbol,
         uint8 _decimals,
         uint256 _totalSupply
     )
-        initializer
         public
     {
         name = _name;
@@ -34,6 +34,23 @@ contract SimpleToken is Initializable {
         totalSupply = _totalSupply * 10 ** uint256(decimals);
         emit Transfer(address(0), msg.sender, _totalSupply);
     }
+
+    // function initialize(
+    //     string memory _name,
+    //     string memory _symbol,
+    //     uint8 _decimals,
+    //     uint256 _totalSupply
+    // )
+    //     initializer
+    //     public
+    // {
+    //     name = _name;
+    //     symbol = _symbol;
+    //     decimals  = _decimals;
+    //     balanceOf[msg.sender] = _totalSupply;
+    //     totalSupply = _totalSupply * 10 ** uint256(decimals);
+    //     emit Transfer(address(0), msg.sender, _totalSupply);
+    // }
 
     function transfer(
         address _to,

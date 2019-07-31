@@ -7,8 +7,10 @@ pragma solidity ^0.5.0;
 import "./CreatureFactory.sol";
 
 
+import "./Marketplace.sol";
 
-contract Asset is CreatureFactory {
+
+contract Asset is CreatureFactory, Marketplace {
 
     address nftAddress;
 
@@ -58,12 +60,23 @@ contract Asset is CreatureFactory {
     }
 
 
-
     /////////// ------ Reference from CreatureFactory.sol ---------------------
     function _mint(uint256 _optionId, address _toAddress) public returns (bool) {
         //mint(_optionId, _toAddress);  
         CreatureFactory(this).mint(_optionId, _toAddress);
         return true;
     }
+
+
+    /////////// ------ Reference from Marketplace.sol ---------------------
+    function makeProduct(string memory _name, uint _price) public {
+        createProduct(_name, _price);
+    }
+
+    function buyProduct(uint _id) public {
+        purchaseProduct(_id);
+    }
+    
+    
     
 }

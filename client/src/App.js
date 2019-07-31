@@ -7,6 +7,8 @@ import Web3Info from "./components/Web3Info/index.js";
 import CounterUI from "./components/Counter/index.js";
 import Wallet from "./components/Wallet/index.js";
 import Instructions from "./components/Instructions/index.js";
+//import Provable from './components/ProvableCrowdsale/index'  // Oracle
+
 
 import { Loader, Button, Card, Input, Heading, Table, Form } from 'rimble-ui';
 import { Grid } from 'react-bootstrap';
@@ -77,8 +79,12 @@ class App extends Component {
     this.sendMintTo = this.sendMintTo.bind(this);
     this.sendTokenURI = this.sendTokenURI.bind(this);
     this.sendMint = this.sendMint.bind(this);
+    this.sendProvableOracleRequest = this.sendProvableOracleRequest.bind(this);
 
     this.sendScoringByThirdParty = this.sendScoringByThirdParty.bind(this);
+
+    this.sendCreateProduct = this.sendCreateProduct.bind(this);
+    this.sendPurchaseProduct = this.sendPurchaseProduct.bind(this);
   }
 
 
@@ -205,7 +211,6 @@ class App extends Component {
   }
 
 
-
   ////////--------------------- Asset（TradeERC721）---------------------------
   sendMintTo = async () => {
     const { accounts, asset } = this.state;
@@ -242,6 +247,21 @@ class App extends Component {
   }
 
 
+  sendCreateProduct = async () => {
+    const { accounts, asset } = this.state;
+    let _name = "Solar Panel"
+    let _price = 1000
+    const response_1 = await asset.methods.createProduct(_name, _price).send({ from: accounts[0] })
+    console.log('=== response of createProduct function of being inherited from Marketplace.sol ===', response_1);  // Debug
+  }
+  
+  sendPurchaseProduct = async () => {
+    const { accounts, asset } = this.state;
+    let _id = 1
+    const response_1 = await asset.methods.purchaseProduct(_id).send({ from: accounts[0] })
+    console.log('=== response of purchaseProduct function of being inherited from Marketplace.sol ===', response_1);  // Debug
+  }
+
 
   ////////--------------------- Scoring By Third Party ---------------------------
   sendScoringByThirdParty = async () => {
@@ -273,6 +293,16 @@ class App extends Component {
 
 
 
+  ////////--------------------- Provable Oracle ---------------------------
+  sendProvableOracleRequest = async () => {
+    const { accounts, provable_oracle } = this.state;
+
+    const gasAmount = 1e6
+
+    const response_1 = await provable_oracle.methods.getPriceViaProvable().send({ gas: gasAmount, from: accounts[0] })
+    console.log('=== response of getPriceViaProvable function ===', response_1);  // Debug
+  }
+
 
   //////////////////////////////////// 
   ///// Ganache
@@ -295,6 +325,7 @@ class App extends Component {
     let Exchange = {};
     let EscrowPayment = {};
     let ScoringByThirdParty = {};
+    let ProvableOracle = {};
 
     try {
       //Counter = require("../../build/contracts/Counter.json");
@@ -303,6 +334,7 @@ class App extends Component {
       Exchange = require("../../build/contracts/Exchange.json");  // Load ABI of contract of Exchange
       EscrowPayment = require("../../build/contracts/EscrowPayment.json");  // Load ABI of contract of EscrowPayment
       ScoringByThirdParty = require("../../build/contracts/ScoringByThirdParty.json");  // Load ABI of contract of ScoringByThirdParty
+      ProvableOracle = require("../../build/contracts/ProvableOracle.json");  // Load ABI of contract of ProvableOracle
       // Counter = require("../../contracts/Counter.sol");
       // Wallet = require("../../contracts/Wallet.sol");
       // Asset = require("../../contracts/Asset.sol");
@@ -339,6 +371,7 @@ class App extends Component {
         let instanceExchange = null;
         let instanceEscrowPayment = null;
         let instanceScoringByThirdParty = null;
+        let instanceProvableOracle = null;
         let deployedNetwork = null;
 
         if (Counter.networks) {
@@ -399,15 +432,25 @@ class App extends Component {
             console.log('=== instanceScoringByThirdParty ===', instanceScoringByThirdParty);
           }
         }
+        if (ProvableOracle.networks) {
+          deployedNetwork = ProvableOracle.networks[networkId.toString()];
+          if (deployedNetwork) {
+            instanceProvableOracle = new web3.eth.Contract(
+              ProvableOracle.abi,
+              deployedNetwork && deployedNetwork.address,
+            );
+            console.log('=== instanceProvableOracley ===', instanceProvableOracle);
+          }
+        }
 
-        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment || instanceScoringByThirdParty) {
+        if (instance || instanceWallet || instanceAsset || instanceExchange || instanceEscrowPayment || instanceScoringByThirdParty || instanceProvableOracle) {
           // Set web3, accounts, and contract to the state, and then proceed with an
           // example of interacting with the contract's methods.
           this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment, scoring_by_third_party: instanceScoringByThirdParty }, () => {
-              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
+            isMetaMask, contract: instance, wallet: instanceWallet, asset: instanceAsset, exchange: instanceExchange, escrow_payment: instanceEscrowPayment, scoring_by_third_party: instanceScoringByThirdParty, provable_oracle: instanceProvableOracle }, () => {
+              this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle);
               setInterval(() => {
-                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty);
+                this.refreshValues(instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle);
               }, 5000);
             });
         }
@@ -430,7 +473,7 @@ class App extends Component {
     }
   }
 
-  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty) => {
+  refreshValues = (instance, instanceWallet, instanceAsset, instanceExchange, instanceEscrowPayment, instanceScoringByThirdParty, instanceProvableOracle) => {
     if (instance) {
       this.getCount();
     }
@@ -448,6 +491,9 @@ class App extends Component {
     }
     if (instanceScoringByThirdParty) {
       console.log('refreshValues of instanceScoringByThirdParty');
+    }
+    if (instanceProvableOracle) {
+      console.log('refreshValues of instanceProvableOracle');
     }
   }
 
@@ -803,6 +849,16 @@ class App extends Component {
           <Card width={'600px'} bg="primary">
             <Button onClick={this.sendMint}> Mint（CreatureFactory）</Button>
           </Card>
+
+          <span style={{ padding: "20px" }}></span>
+
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendCreateProduct}> Create Product（Marketplace.sol）</Button>
+
+            <span style={{ padding: "20px" }}></span>
+
+            <Button onClick={this.sendPurchaseProduct}> Purchase Product（Marketplace.sol）</Button>
+          </Card>
         </div>
       )}
       </div>
@@ -849,6 +905,26 @@ class App extends Component {
     );
   }
 
+  renderProvable() {
+    return (
+      <div className={styles.wrapper}>
+      {!this.state.web3 && this.renderLoader()}
+      {this.state.web3 && !this.state.provable_oracle && (
+        this.renderDeployCheck('provable_oracle')
+      )}
+      {this.state.web3 && this.state.provable_oracle && (
+        <div className={styles.contracts}>
+          <h1>Provable Contract is good to Go!</h1>
+         
+          <Card width={'600px'} bg="primary">
+            <Button onClick={this.sendProvableOracleRequest}>Provable Oracle Request</Button>
+          </Card>
+        </div>
+      )}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className={styles.App}>
@@ -862,6 +938,7 @@ class App extends Component {
           {this.state.route === 'exchange/1' && this.renderExchangeDetail()}
           {this.state.route === 'escrow_payment' && this.renderEscrowPayment()}
           {this.state.route === 'scoring_by_third_party' && this.renderScoringByThirdParty()}
+          {this.state.route === 'provable' && this.renderProvable()}
         <Footer />
       </div>
     );

@@ -13,7 +13,7 @@ contract ProvableOracle is usingOraclize {
     {
         oraclize_query(
             "URL",
-            "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
+            "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=ETH,USD,EUR"
         );
     }
     
